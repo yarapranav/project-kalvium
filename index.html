@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Response Viewer</title>
+</head>
+<body>
+    <h1>Last 20 Responses</h1>
+    <ul id="response-list"></ul>
+
+    <script>
+        function fetchResponses() {
+            fetch('http://localhost:3000/')
+                .then(response => response.json())
+                .then(data => {
+                    const responseList = document.getElementById('response-list');
+                    responseList.innerHTML = '';
+
+                    data.forEach(response => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${response.question} = ${response.answer}`;
+                        responseList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error fetching responses:', error));
+        }
+        fetchResponses();
+    </script>
+</body>
+</html>
